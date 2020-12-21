@@ -8,6 +8,9 @@ function App() {
         <h1>
           Vaporwavez
         </h1>
+        <div>
+          <a href="https://www.instagram.com/vaporwavez_music/">Instagram</a>
+        </div>
       </header>
     </div>
   );
