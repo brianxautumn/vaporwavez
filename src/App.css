@@ -37,10 +37,23 @@
   }
 }
 
+.app-wrapper{
+  max-width: 500px;
+  width: 100%;
+  border: 5px solid white;
+}
+
 a{
-  border-radius: 5px;
+  /* border-radius: 5px; */
   background: white;
   padding: 10px;
   text-decoration: none;
   font-weight: bolder;
+  display: block;
+  margin-bottom: 20px;
+  counter-reset: #61dafb;
+}
+
+a:hover{
+  background: #e0e0e0;
 }
