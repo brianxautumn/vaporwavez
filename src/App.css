@@ -55,6 +55,10 @@ a{
   counter-reset: #61dafb;
 }
 
+a,a:visited{
+  color: #c674e8;
+}
+
 a:hover{
   background: #e0e0e0;
 }
