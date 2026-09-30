@@ -30,68 +30,72 @@ const Background = () => {
   React.useEffect(() => {
     window.addEventListener('scroll', listenToScroll, { passive: true })
 
-    var scene = new THREE.Scene();
-    camera.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    renderer.current = new THREE.WebGLRenderer({ alpha: true });
-    renderer.current.setSize(window.innerWidth, window.innerHeight);
-    element.current.appendChild(renderer.current.domElement);
+    try {
+      var scene = new THREE.Scene();
+      camera.current = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      renderer.current = new THREE.WebGLRenderer({ alpha: true });
+      renderer.current.setSize(window.innerWidth, window.innerHeight);
+      element.current.appendChild(renderer.current.domElement);
 
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
-    scene.add(ambientLight);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.1);
+      scene.add(ambientLight);
 
-    const pointLight = new THREE.PointLight(0xffffff, 0.005);
-    pointLight.position.z = 10;
-    camera.current.add(pointLight);
-    scene.add(camera.current);
-    camera.current.position.z = 5;
+      const pointLight = new THREE.PointLight(0xffffff, 0.005);
+      pointLight.position.z = 10;
+      camera.current.add(pointLight);
+      scene.add(camera.current);
+      camera.current.position.z = 5;
 
-    var animate = function () {
-      requestAnimationFrame(animate);
-      if (object.current) {
-        object.current.rotation.y += randomNumber(0.005, 0.01);
-        object.current.rotation.z += randomNumber(0.005, 0.01);
-        object.current.rotation.x += randomNumber(0.005, 0.01);
-        const ratio = 1 / document.body.scrollWidth * 7000;
-        object.current.position.z = (scrollPosition.current / document.body.scrollHeight * 4 * ratio) - ratio - 20;
-      }
-      renderer.current.render(scene, camera.current);
-    };
-    animate();
+      var animate = function () {
+        requestAnimationFrame(animate);
+        if (object.current) {
+          object.current.rotation.y += randomNumber(0.005, 0.01);
+          object.current.rotation.z += randomNumber(0.005, 0.01);
+          object.current.rotation.x += randomNumber(0.005, 0.01);
+          const ratio = 1 / document.body.scrollWidth * 7000;
+          object.current.position.z = (scrollPosition.current / document.body.scrollHeight * 4 * ratio) - ratio - 20;
+        }
+        renderer.current.render(scene, camera.current);
+      };
+      animate();
 
-    window.addEventListener('resize', onWindowResize);
+      window.addEventListener('resize', onWindowResize);
 
-    const onProgress = function (xhr) {
-      if (xhr.lengthComputable) {
-        const percentComplete = xhr.loaded / xhr.total * 100;
-        console.log(Math.round(percentComplete, 2) + '% downloaded');
-      }
-    };
+      const onProgress = function (xhr) {
+        if (xhr.lengthComputable) {
+          const percentComplete = xhr.loaded / xhr.total * 100;
+          console.log(Math.round(percentComplete, 2) + '% downloaded');
+        }
+      };
 
-    const onError = function () { };
+      const onError = function () { };
 
-    const manager = new THREE.LoadingManager();
-    manager.addHandler(/\.dds$/i, new DDSLoader());
-    new MTLLoader(manager)
-      .setPath(process.env.PUBLIC_URL + '/')
-      .load('vaporwavez_floppy.mtl', function (materials) {
-        materials.preload();
-        new OBJLoader(manager)
-          .setMaterials(materials)
-          .setPath(process.env.PUBLIC_URL + '/')
-          .load('vaporwavez_floppy.obj', function (obj) {
-            object.current = obj;
-            console.log(document.body.scrollWidth)
-            object.current.position.z = -1 / document.body.scrollWidth;
-            object.current.position.y = -5;
-            const newScale = 10;
-            object.current.scale.z = newScale;
-            object.current.scale.x = newScale;
-            object.current.scale.y = newScale;
-            object.current.rotation.y = -190;
-            scene.add(object.current);
-            renderer.current.render(scene, camera.current);
-          }, onProgress, onError);
-      });
+      const manager = new THREE.LoadingManager();
+      manager.addHandler(/\.dds$/i, new DDSLoader());
+      new MTLLoader(manager)
+        .setPath(process.env.PUBLIC_URL + '/')
+        .load('vaporwavez_floppy.mtl', function (materials) {
+          materials.preload();
+          new OBJLoader(manager)
+            .setMaterials(materials)
+            .setPath(process.env.PUBLIC_URL + '/')
+            .load('vaporwavez_floppy.obj', function (obj) {
+              object.current = obj;
+              console.log(document.body.scrollWidth)
+              object.current.position.z = -1 / document.body.scrollWidth;
+              object.current.position.y = -5;
+              const newScale = 10;
+              object.current.scale.z = newScale;
+              object.current.scale.x = newScale;
+              object.current.scale.y = newScale;
+              object.current.rotation.y = -190;
+              scene.add(object.current);
+              renderer.current.render(scene, camera.current);
+            }, onProgress, onError);
+        });
+    } catch (error) {
+      console.error('Failed to initialize WebGL background:', error);
+    }
 
     return () => {
       window.removeEventListener('resize', onWindowResize);
