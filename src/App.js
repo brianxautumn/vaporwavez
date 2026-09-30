@@ -14,27 +14,14 @@ function App() {
             Vaporwavez
           </h1>
           <p>Vaporwave producer</p>
-          <div className="links">
-            <a target="blank" href="https://open.spotify.com/artist/67AOfL6Oi8UZqpuGlw0mT3">Spotify</a>
-            <a target="blank" href="https://music.apple.com/us/artist/vaporwavez/1546276377">Apple Music</a>
-            <a target="blank" href="https://www.deezer.com/us/artist/117558422">Deezer</a>
-            <a target="blank" href="https://www.instagram.com/vaporwavez_music/">Instagram</a>
-            <a target="blank" href="https://twitter.com/vaporwavezmusic">Twitter</a>
-            <a target="blank" href="https://discord.gg/fF9zkuhP">Discord</a>
-            <div>
-              aesthetic [at] vaporwave.com
-            </div>
-            <div className="playlist-wrapper">
-              <iframe
-                src="https://open.spotify.com/embed/playlist/0HkJUicjusLn8P7BdS2P4N"
-                width="100%"
-                height="380"
-                frameborder="0"
-                allowtransparency="true"
-                allow="encrypted-media"
-              />
-            </div>
-          </div>
+          <nav className="links" aria-label="Vaporwavez on social and streaming platforms">
+            <ul>
+              <li><a target="_blank" rel="noopener noreferrer" href="https://open.spotify.com/artist/67AOfL6Oi8UZqpuGlw0mT3" aria-label="Spotify (opens in a new tab)">Spotify</a></li>
+              <li><a target="_blank" rel="noopener noreferrer" href="https://music.apple.com/us/artist/vaporwavez/1546276377" aria-label="Apple Music (opens in a new tab)">Apple Music</a></li>
+              <li><a target="_blank" rel="noopener noreferrer" href="https://www.deezer.com/us/artist/117558422" aria-label="Deezer (opens in a new tab)">Deezer</a></li>
+              <li><a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/vaporwavez_music/" aria-label="Instagram (opens in a new tab)">Instagram</a></li>
+            </ul>
+          </nav>
         </div>
       </header>
     </div>

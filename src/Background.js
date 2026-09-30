@@ -23,6 +23,10 @@ const Background = () => {
     scrollPosition.current = position;
   };
 
+  function randomNumber(min, max) {
+    return Math.random() * (max - min) + min;
+  }
+
   React.useEffect(() => {
     window.addEventListener('scroll', listenToScroll, { passive: true })
 
@@ -44,7 +48,9 @@ const Background = () => {
     var animate = function () {
       requestAnimationFrame(animate);
       if (object.current) {
-        object.current.rotation.y += 0.006;
+        object.current.rotation.y += randomNumber(0.005, 0.01);
+        object.current.rotation.z += randomNumber(0.005, 0.01);
+        object.current.rotation.x += randomNumber(0.005, 0.01);
         const ratio = 1 / document.body.scrollWidth * 7000;
         object.current.position.z = (scrollPosition.current / document.body.scrollHeight * 4 * ratio) - ratio - 20;
       }
@@ -67,20 +73,21 @@ const Background = () => {
     manager.addHandler(/\.dds$/i, new DDSLoader());
     new MTLLoader(manager)
       .setPath(process.env.PUBLIC_URL + '/')
-      .load('myPc2.mtl', function (materials) {
+      .load('vaporwavez_floppy.mtl', function (materials) {
         materials.preload();
         new OBJLoader(manager)
           .setMaterials(materials)
           .setPath(process.env.PUBLIC_URL + '/')
-          .load('myPc2.obj', function (obj) {
+          .load('vaporwavez_floppy.obj', function (obj) {
             object.current = obj;
             console.log(document.body.scrollWidth)
             object.current.position.z = -1 / document.body.scrollWidth;
             object.current.position.y = -5;
-            const newScale = 7;
+            const newScale = 10;
             object.current.scale.z = newScale;
             object.current.scale.x = newScale;
             object.current.scale.y = newScale;
+            object.current.rotation.y = -190;
             scene.add(object.current);
             renderer.current.render(scene, camera.current);
           }, onProgress, onError);
@@ -94,8 +101,8 @@ const Background = () => {
 
   return (
     <>
-      <div className="canvas-bg" />
-      <div id="canvas" ref={element} />
+      <div className="canvas-bg" aria-hidden="true" />
+      <div id="canvas" ref={element} aria-hidden="true" />
     </>
   )
 
